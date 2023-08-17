@@ -1,5 +1,6 @@
 import { Bot } from "grammy";
 import { getConfig } from "./config/config";
+import { logger } from "./libs/logger/logger";
 
 const startBot = () => {
 	try {
@@ -9,7 +10,7 @@ const startBot = () => {
 
 		bot.start();
 	} catch (error) {
-		console.log("[ERROR] startBot", error);
+		logger.error(`startBot ${error}`);
 	}
 };
 
