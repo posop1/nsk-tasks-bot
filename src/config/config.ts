@@ -4,6 +4,7 @@ import { IConfig } from "./config.interface";
 export const getConfig = () => {
 	dotenv.config();
 
+	const ENV = process.env.ENV || "prod";
 	const TOKEN = process.env.TOKEN;
 
 	if (!TOKEN) {
@@ -11,6 +12,7 @@ export const getConfig = () => {
 	}
 
 	const config: IConfig = {
+		ENV,
 		TOKEN
 	};
 
