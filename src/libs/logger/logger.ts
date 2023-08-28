@@ -11,16 +11,19 @@ const levels = {
 	debug: 10
 };
 
-export const logger = pino({
-	level: process.env.PINO_LOG_LEVEL || "info",
-	customLevels: levels,
-	useOnlyCustomLevels: true,
-	formatters: {
-		level: (label) => {
-			return { level: label.toUpperCase() };
-		}
+export const logger = pino(
+	{
+		level: process.env.PINO_LOG_LEVEL || "info",
+		customLevels: levels,
+		useOnlyCustomLevels: true,
+		formatters: {
+			level: (label) => {
+				return { level: label.toUpperCase() };
+			}
+		},
+		timestamp: pino.stdTimeFunctions.isoTime
 	},
-	timestamp: pino.stdTimeFunctions.isoTime
-});
+	pino.destination("./log/app.log")
+);
 
-// TODO: add logger levels on logs
+// TODO: dev or prod logger
