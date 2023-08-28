@@ -6,14 +6,20 @@ export const getConfig = () => {
 
 	const ENV = process.env.ENV || "prod";
 	const TOKEN = process.env.TOKEN;
+	const ACCESSTOKEN = process.env.ACCESSTOKEN;
 
 	if (!TOKEN) {
 		throw new Error("token not found");
 	}
 
+	if (!ACCESSTOKEN) {
+		throw new Error("access token not found");
+	}
+
 	const config: IConfig = {
 		ENV,
-		TOKEN
+		TOKEN,
+		ACCESSTOKEN
 	};
 
 	return config;
