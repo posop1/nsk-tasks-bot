@@ -1,4 +1,5 @@
 import pino from "pino";
+import { getConfig } from "../../config/config";
 
 const levels = {
 	emerg: 80,
@@ -11,19 +12,24 @@ const levels = {
 	debug: 10
 };
 
-export const logger = pino(
-	{
-		level: process.env.PINO_LOG_LEVEL || "info",
-		customLevels: levels,
-		useOnlyCustomLevels: true,
-		formatters: {
-			level: (label) => {
-				return { level: label.toUpperCase() };
-			}
-		},
-		timestamp: pino.stdTimeFunctions.isoTime
+const loggerConfig = {
+	level: process.env.PINO_LOG_LEVEL || "info",
+	customLevels: levels,
+	useOnlyCustomLevels: true,
+	formatters: {
+		level: (label: string) => {
+			return { level: label.toUpperCase() };
+		}
 	},
-	pino.destination("./log/app.log")
-);
+	timestamp: pino.stdTimeFunctions.isoTime
+};
 
-// TODO: dev or prod logger
+export const getLogger = () => {
+	const { ENV } = getConfig();
+
+	if (ENV === "prod") {
+		return pino(loggerConfig, pino.destination("./log/app.log"));
+	} else {
+		return pino(loggerConfig);
+	}
+};

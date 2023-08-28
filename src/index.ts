@@ -1,8 +1,10 @@
 import { Bot } from "grammy";
 import { getConfig } from "./config/config";
-import { logger } from "./libs/logger/logger";
+import { getLogger } from "./libs/logger/logger";
 
 const startBot = () => {
+	const logger = getLogger();
+
 	try {
 		const { TOKEN, ENV } = getConfig();
 
