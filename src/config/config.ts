@@ -19,7 +19,7 @@ export const getConfig = () => {
 	const config: IConfig = {
 		ENV,
 		TOKEN,
-		ACCESSTOKEN
+		ACCESSTOKEN: `Bearer ${ACCESSTOKEN}`
 	};
 
 	return config;

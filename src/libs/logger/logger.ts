@@ -12,7 +12,7 @@ const levels = {
 	debug: 10
 };
 
-const loggerConfig = {
+const devLogger = pino({
 	level: process.env.PINO_LOG_LEVEL || "info",
 	customLevels: levels,
 	useOnlyCustomLevels: true,
@@ -22,14 +22,31 @@ const loggerConfig = {
 		}
 	},
 	timestamp: pino.stdTimeFunctions.isoTime
-};
+});
 
-export const getLogger = () => {
+const prodLogger = pino(
+	{
+		level: process.env.PINO_LOG_LEVEL || "info",
+		customLevels: levels,
+		useOnlyCustomLevels: true,
+		formatters: {
+			level: (label: string) => {
+				return { level: label.toUpperCase() };
+			}
+		},
+		timestamp: pino.stdTimeFunctions.isoTime
+	},
+	pino.destination("./log/app.log")
+);
+
+const setLogger = () => {
 	const { ENV } = getConfig();
 
 	if (ENV === "prod") {
-		return pino(loggerConfig, pino.destination("./log/app.log"));
+		return prodLogger;
 	} else {
-		return pino(loggerConfig);
+		return devLogger;
 	}
 };
+
+export const logger = setLogger();
