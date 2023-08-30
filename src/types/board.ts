@@ -73,8 +73,8 @@ export interface List {
 
 export interface Card {
 	id: string;
-	createdAt: string;
-	updatedAt: string;
+	createdAt: Date;
+	updatedAt: Date;
 	position: number;
 	name: string;
 	description: string;

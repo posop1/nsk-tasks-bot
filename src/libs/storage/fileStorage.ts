@@ -1,9 +1,6 @@
 import fs from "fs";
 import { logger } from "../logger/logger";
-
-interface IDataFile {
-	number: number;
-}
+import { IDataFile } from "../../types/prevNumbers";
 
 // export const checkFile = () => {
 // 	const mockdata = {
@@ -40,7 +37,7 @@ const readPrevNumber = () => {
 
 		const data: IDataFile = JSON.parse(rawdata);
 
-		return data.number;
+		return data;
 	} catch (error) {
 		logger.error(error, "read prev number");
 	}
