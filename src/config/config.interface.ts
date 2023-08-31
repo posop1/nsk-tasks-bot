@@ -4,4 +4,5 @@ export interface IConfig {
 	TOKEN: string;
 	ACCESSTOKEN: string;
 	CHATID: string;
+	INTERVAL: string;
 }

@@ -5,8 +5,11 @@ import { logger } from "../libs/logger/logger";
 import { storage } from "../libs/storage/fileStorage";
 import { getTemplate } from "../libs/template/template";
 import { IDataFile } from "../types/prevNumbers";
+import { config } from "../config/config";
 
 export const createTaskNotification = (CHATID: string, bot: Bot<Context, Api<RawApi>>) => {
+	const INTERVAL = +config.INTERVAL;
+
 	setInterval(async () => {
 		const networkBoard = await fetch.getNetworkBoard();
 		const serviceBoard = await fetch.getServiceBoard();
@@ -16,11 +19,10 @@ export const createTaskNotification = (CHATID: string, bot: Bot<Context, Api<Raw
 		if (!networkBoard || !serviceBoard || !questBoard || !archiveBoard) {
 			return logger.error("cards not found");
 		}
-		console.log(archiveBoard);
 
-		const prevNumbers = storage.readPrevNumber();
-		if (!prevNumbers) {
-			return logger.error("prev numbers not found");
+		const previousCardsLength = storage.readCardsCount();
+		if (!previousCardsLength) {
+			return logger.error("previous cards length not found");
 		}
 
 		const allCardsLength: IDataFile = {
@@ -33,15 +35,18 @@ export const createTaskNotification = (CHATID: string, bot: Bot<Context, Api<Raw
 		const sumAllCardsLength =
 			allCardsLength.archive + allCardsLength.network + allCardsLength.quest + allCardsLength.service;
 		const sumPrevLength =
-			prevNumbers.archive + prevNumbers.network + prevNumbers.quest + prevNumbers.service;
+			previousCardsLength.archive +
+			previousCardsLength.network +
+			previousCardsLength.quest +
+			previousCardsLength.service;
 
 		if (sumAllCardsLength === sumPrevLength) {
-			storage.writePrevNumber(allCardsLength);
+			storage.writeCardsCount(allCardsLength);
 
-			return logger.info("sum all cards length and prev num length equal");
+			return logger.info("sum all cards length and previous cards length equal");
 		}
 
-		if (networkBoard.included.cards.length > prevNumbers.network) {
+		if (networkBoard.included.cards.length > previousCardsLength.network) {
 			try {
 				const template = getTemplate(networkBoard);
 
@@ -53,7 +58,7 @@ export const createTaskNotification = (CHATID: string, bot: Bot<Context, Api<Raw
 			}
 		}
 
-		if (serviceBoard.included.cards.length > prevNumbers.service) {
+		if (serviceBoard.included.cards.length > previousCardsLength.service) {
 			try {
 				const template = getTemplate(serviceBoard);
 
@@ -65,7 +70,7 @@ export const createTaskNotification = (CHATID: string, bot: Bot<Context, Api<Raw
 			}
 		}
 
-		if (questBoard.included.cards.length > prevNumbers.quest) {
+		if (questBoard.included.cards.length > previousCardsLength.quest) {
 			try {
 				const template = getTemplate(questBoard);
 
@@ -77,7 +82,7 @@ export const createTaskNotification = (CHATID: string, bot: Bot<Context, Api<Raw
 			}
 		}
 
-		if (archiveBoard.included.cards.length > prevNumbers.archive) {
+		if (archiveBoard.included.cards.length > previousCardsLength.archive) {
 			try {
 				const template = getTemplate(archiveBoard);
 
@@ -88,6 +93,6 @@ export const createTaskNotification = (CHATID: string, bot: Bot<Context, Api<Raw
 				logger.error(error, "archiveCards: send message");
 			}
 		}
-		storage.writePrevNumber(allCardsLength);
-	}, 10000);
+		storage.writeCardsCount(allCardsLength);
+	}, INTERVAL);
 };

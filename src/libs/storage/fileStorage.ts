@@ -2,7 +2,7 @@ import fs from "fs";
 import { logger } from "../logger/logger";
 import { IDataFile } from "../../types/prevNumbers";
 
-const writePrevNumber = (obj: IDataFile) => {
+const writeCardsCount = (obj: IDataFile) => {
 	try {
 		const rawdata = JSON.stringify(obj);
 
@@ -14,7 +14,7 @@ const writePrevNumber = (obj: IDataFile) => {
 	}
 };
 
-const readPrevNumber = () => {
+const readCardsCount = () => {
 	try {
 		const rawdata = fs.readFileSync(`${__dirname}/data.json`, "utf8");
 
@@ -27,6 +27,6 @@ const readPrevNumber = () => {
 };
 
 export const storage = {
-	writePrevNumber,
-	readPrevNumber
+	writeCardsCount,
+	readCardsCount
 };
