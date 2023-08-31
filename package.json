@@ -7,6 +7,7 @@
 		"build": "tsc",
 		"start": "node ./dist/index.js",
 		"dev": "nodemon src/index.ts | npx pino-pretty",
+		"migrate": "node ./dist/libs/storage/migrate.js",
 		"format": "prettier --write --ignore-unknown **"
 	},
 	"author": "",
