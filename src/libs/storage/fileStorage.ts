@@ -2,11 +2,13 @@ import fs from "fs";
 import { logger } from "../logger/logger";
 import { IDataFile } from "../../types/prevNumbers";
 
+const dir = `${__dirname}/../../db/data.json`;
+
 const writeCardsCount = (obj: IDataFile) => {
 	try {
 		const rawdata = JSON.stringify(obj);
 
-		fs.writeFileSync(`${__dirname}/data.json`, rawdata);
+		fs.writeFileSync(dir, rawdata);
 
 		logger.info("write file successfully");
 	} catch (error) {
@@ -16,7 +18,7 @@ const writeCardsCount = (obj: IDataFile) => {
 
 const readCardsCount = () => {
 	try {
-		const rawdata = fs.readFileSync(`${__dirname}/data.json`, "utf8");
+		const rawdata = fs.readFileSync(dir, "utf8");
 
 		const data: IDataFile = JSON.parse(rawdata);
 
