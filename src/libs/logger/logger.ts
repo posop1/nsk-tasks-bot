@@ -1,5 +1,5 @@
 import pino from "pino";
-import { getConfig } from "../../config/config";
+import { config } from "../../config/config";
 
 const levels = {
 	emerg: 80,
@@ -40,7 +40,7 @@ const prodLogger = pino(
 );
 
 const setLogger = () => {
-	const { ENV } = getConfig();
+	const { ENV } = config;
 
 	if (ENV === "prod") {
 		return prodLogger;

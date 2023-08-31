@@ -1,20 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getArchiveBoard, getNetworkBoard, getQuestBoard, getServiceBoard } from "../api/api";
+import { Api, Bot, Context, RawApi } from "grammy";
+import { fetch } from "../api/api";
 import { logger } from "../libs/logger/logger";
 import { storage } from "../libs/storage/fileStorage";
 import { getTemplate } from "../libs/template/template";
 import { IDataFile } from "../types/prevNumbers";
 
-export const startNotification = (CHATID: string, bot: any) => {
+export const createTaskNotification = (CHATID: string, bot: Bot<Context, Api<RawApi>>) => {
 	setInterval(async () => {
-		const networkBoard = await getNetworkBoard();
-		const serviceBoard = await getServiceBoard();
-		const questBoard = await getQuestBoard();
-		const archiveBoard = await getArchiveBoard();
+		const networkBoard = await fetch.getNetworkBoard();
+		const serviceBoard = await fetch.getServiceBoard();
+		const questBoard = await fetch.getQuestBoard();
+		const archiveBoard = await fetch.getArchiveBoard();
 
 		if (!networkBoard || !serviceBoard || !questBoard || !archiveBoard) {
 			return logger.error("cards not found");
 		}
+		console.log(archiveBoard);
 
 		const prevNumbers = storage.readPrevNumber();
 		if (!prevNumbers) {

@@ -1,11 +1,11 @@
 import { Bot } from "grammy";
-import { getConfig } from "./config/config";
+import { config } from "./config/config";
 import { logger } from "./libs/logger/logger";
-import { startNotification } from "./notification/notification";
+import notification from "./notification";
 
 const startBot = () => {
 	try {
-		const { TOKEN, ENV, CHATID } = getConfig();
+		const { TOKEN, ENV, CHATID } = config;
 
 		const bot = new Bot(TOKEN);
 
@@ -13,7 +13,7 @@ const startBot = () => {
 
 		logger.info(`Bot started on ${ENV} mode`);
 
-		startNotification(CHATID, bot);
+		notification.createTaskNotification(CHATID, bot);
 	} catch (error) {
 		logger.error(error, "startBot");
 	}

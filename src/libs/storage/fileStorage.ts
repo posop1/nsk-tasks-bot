@@ -2,23 +2,6 @@ import fs from "fs";
 import { logger } from "../logger/logger";
 import { IDataFile } from "../../types/prevNumbers";
 
-// export const checkFile = () => {
-// 	const mockdata = {
-// 		number: 1
-// 	};
-
-// 	const rawMockdata = JSON.stringify(mockdata);
-
-// 	fs.open(`${__dirname}/data.json`, "w", (err) => {
-// 		if (err) {
-// 			return logger.error("data.json");
-// 		}
-
-// 		fs.writeFileSync(`${__dirname}/data.json`, rawMockdata);
-// 		return;
-// 	});
-// };
-
 const writePrevNumber = (obj: IDataFile) => {
 	try {
 		const rawdata = JSON.stringify(obj);

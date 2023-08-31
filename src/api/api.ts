@@ -2,7 +2,7 @@ import { logger } from "../libs/logger/logger";
 import { Root } from "../types/board";
 import api from "./instance";
 
-export const getNetworkBoard = async () => {
+const getNetworkBoard = async () => {
 	try {
 		const { data } = await api.get<Root>("/boards/1054158202398049360");
 
@@ -12,7 +12,7 @@ export const getNetworkBoard = async () => {
 	}
 };
 
-export const getServiceBoard = async () => {
+const getServiceBoard = async () => {
 	try {
 		const { data } = await api.get<Root>("/boards/1054158451237717074");
 
@@ -22,7 +22,7 @@ export const getServiceBoard = async () => {
 	}
 };
 
-export const getQuestBoard = async () => {
+const getQuestBoard = async () => {
 	try {
 		const { data } = await api.get<Root>("/boards/1054158675112887380");
 
@@ -32,7 +32,7 @@ export const getQuestBoard = async () => {
 	}
 };
 
-export const getArchiveBoard = async () => {
+const getArchiveBoard = async () => {
 	try {
 		const { data } = await api.get<Root>("/boards/1054925397256308248");
 
@@ -40,4 +40,11 @@ export const getArchiveBoard = async () => {
 	} catch (error) {
 		return logger.error(error, "get archive board");
 	}
+};
+
+export const fetch = {
+	getNetworkBoard,
+	getArchiveBoard,
+	getServiceBoard,
+	getQuestBoard
 };

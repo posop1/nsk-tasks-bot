@@ -1,10 +1,10 @@
 import axios from "axios";
-import { getConfig } from "../config/config";
+import { config } from "../config/config";
 
-const { ACCESSTOKEN } = getConfig();
+const { ACCESSTOKEN, APP_URL } = config;
 
 const api = axios.create({
-	baseURL: "https://todo.nskcollege.ru/api/",
+	baseURL: `${APP_URL}/api/`,
 	headers: {
 		accept: "application/json",
 		Authorization: ACCESSTOKEN
