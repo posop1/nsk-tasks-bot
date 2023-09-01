@@ -2,5 +2,6 @@
 /node_modules
 .env
 /log/app.log
+/db/data.json
 
 #TODO: add /log 
