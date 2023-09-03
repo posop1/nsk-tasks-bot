@@ -1,6 +1,9 @@
 export interface IDataFile {
-	network: number;
-	service: number;
-	quest: number;
-	archive: number;
+	id: string;
+	createdAt: string;
+	updatedAt?: string;
+	position: number;
+	name: string;
+	projectId: string;
+	count?: number;
 }

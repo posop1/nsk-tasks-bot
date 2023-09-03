@@ -1,7 +1,7 @@
-import { createTaskNotification } from "./createTask";
+import { createTaskNotifications } from "./createTaskNotifications";
 
 const notification = {
-	createTaskNotification
+	createTaskNotifications
 };
 
 export default notification;

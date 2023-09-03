@@ -1,24 +1,33 @@
 import fs from "fs";
-import { IDataFile } from "../../types/prevNumbers";
 import { logger } from "../logger/logger";
+import { fetch } from "../../api/api";
 
-const migrateDbFile = () => {
+const migrateDbFile = async () => {
 	const dir = `${__dirname}/../../db`;
+	const projects = await fetch.getProjects();
+
+	if (!projects) {
+		return logger.error("projects not found");
+	}
+
+	const dataProjects = projects.included.boards.map((item) => {
+		item = {
+			...item,
+			count: 1
+		};
+
+		return item;
+	});
+
+	console.log(dataProjects);
 
 	fs.access(dir + "/data.json", (err) => {
 		if (err) {
-			const data: IDataFile = {
-				archive: 1,
-				network: 1,
-				quest: 1,
-				service: 1
-			};
-
 			if (!fs.existsSync(dir)) {
 				fs.mkdirSync(dir);
 			}
 
-			fs.writeFileSync(dir + "/data.json", JSON.stringify(data));
+			fs.writeFileSync(dir + "/data.json", JSON.stringify(dataProjects));
 
 			logger.info("migrate data.json file");
 		}

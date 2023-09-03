@@ -13,10 +13,12 @@ const startBot = () => {
 
 		logger.info(`Bot started on ${ENV} mode`);
 
-		notification.createTaskNotification(CHATID, bot);
+		notification.createTaskNotifications(CHATID, bot);
 	} catch (error) {
 		logger.error(error, "startBot");
 	}
 };
 
 startBot();
+
+//TODO: rename all

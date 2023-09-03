@@ -4,7 +4,9 @@ import { IDataFile } from "../../types/prevNumbers";
 
 const dir = `${__dirname}/../../db/data.json`;
 
-const writeCardsCount = (obj: IDataFile) => {
+//TODO: rename all
+
+const writeCardsCount = (obj: IDataFile[]) => {
 	try {
 		const rawdata = JSON.stringify(obj);
 
@@ -20,7 +22,7 @@ const readCardsCount = () => {
 	try {
 		const rawdata = fs.readFileSync(dir, "utf8");
 
-		const data: IDataFile = JSON.parse(rawdata);
+		const data: IDataFile[] = JSON.parse(rawdata);
 
 		return data;
 	} catch (error) {

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface Root {
-	item: Item;
-	included: Included;
+export interface IBoard {
+	item: IBoardItem;
+	included: IBoardIncluded;
 }
 
-export interface Item {
+export interface IBoardItem {
 	id: string;
 	createdAt: string;
 	updatedAt: any;
@@ -13,20 +13,20 @@ export interface Item {
 	projectId: string;
 }
 
-export interface Included {
-	users: User[];
-	boardMemberships: BoardMembership[];
-	labels: Label[];
-	lists: List[];
-	cards: Card[];
-	cardMemberships: CardMembership[];
-	cardLabels: CardLabel[];
-	tasks: Task[];
+export interface IBoardIncluded {
+	users: IBoardUser[];
+	boardMemberships: IBoardBoardMembership[];
+	labels: IBoardLabel[];
+	lists: IBoardList[];
+	cards: IBoardCard[];
+	cardMemberships: IBoardCardMembership[];
+	cardLabels: IBoardCardLabel[];
+	tasks: IBoardTask[];
 	attachments: any[];
-	projects: Project[];
+	projects: IBoardProject[];
 }
 
-export interface User {
+export interface IBoardUser {
 	id: string;
 	createdAt: string;
 	updatedAt?: string;
@@ -42,7 +42,7 @@ export interface User {
 	avatarUrl: any;
 }
 
-export interface BoardMembership {
+export interface IBoardBoardMembership {
 	id: string;
 	createdAt: string;
 	updatedAt: any;
@@ -52,7 +52,7 @@ export interface BoardMembership {
 	userId: string;
 }
 
-export interface Label {
+export interface IBoardLabel {
 	id: string;
 	createdAt: string;
 	updatedAt?: string;
@@ -62,7 +62,7 @@ export interface Label {
 	boardId: string;
 }
 
-export interface List {
+export interface IBoardList {
 	id: string;
 	createdAt: string;
 	updatedAt: any;
@@ -71,7 +71,7 @@ export interface List {
 	boardId: string;
 }
 
-export interface Card {
+export interface IBoardCard {
 	id: string;
 	createdAt: Date;
 	updatedAt: Date;
@@ -87,7 +87,7 @@ export interface Card {
 	isSubscribed: boolean;
 }
 
-export interface CardMembership {
+export interface IBoardCardMembership {
 	id: string;
 	createdAt: string;
 	updatedAt: any;
@@ -95,7 +95,7 @@ export interface CardMembership {
 	userId: string;
 }
 
-export interface CardLabel {
+export interface IBoardCardLabel {
 	id: string;
 	createdAt: string;
 	updatedAt: any;
@@ -103,7 +103,7 @@ export interface CardLabel {
 	labelId: string;
 }
 
-export interface Task {
+export interface IBoardTask {
 	id: string;
 	createdAt: string;
 	updatedAt?: string;
@@ -113,16 +113,16 @@ export interface Task {
 	cardId: string;
 }
 
-export interface Project {
+export interface IBoardProject {
 	id: string;
 	createdAt: string;
 	updatedAt: string;
 	name: string;
-	background: Background;
+	background: IBoardBackground;
 	backgroundImage: any;
 }
 
-export interface Background {
+export interface IBoardBackground {
 	name: string;
 	type: string;
 }
