@@ -20,5 +20,3 @@ const startBot = () => {
 };
 
 startBot();
-
-//TODO: rename all

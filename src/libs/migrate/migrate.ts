@@ -19,8 +19,6 @@ const migrateDbFile = async () => {
 		return item;
 	});
 
-	console.log(dataProjects);
-
 	fs.access(dir + "/data.json", (err) => {
 		if (err) {
 			if (!fs.existsSync(dir)) {

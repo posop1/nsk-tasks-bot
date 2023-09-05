@@ -7,7 +7,7 @@ const api = axios.create({
 	baseURL: `${APP_URL}/api/`,
 	headers: {
 		accept: "application/json",
-		Authorization: ACCESSTOKEN
+		Authorization: `Bearer ${ACCESSTOKEN}`
 	}
 });
 

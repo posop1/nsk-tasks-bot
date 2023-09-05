@@ -4,7 +4,7 @@ import { fetch } from "../api/api";
 import { logger } from "../libs/logger/logger";
 import { storage } from "../libs/storage/fileStorage";
 import { IDataFile } from "../types/prevNumbers";
-import { getTemplate } from "../libs/template/template";
+import { getNewTaskTemplate } from "../libs/template/template";
 
 export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<RawApi>>) => {
 	const INTERAVAL = +config.INTERVAL;
@@ -25,7 +25,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 			return boardsData;
 		});
 
-		const previousBoards = storage.readCardsCount();
+		const previousBoards = storage.readBoardsData();
 		if (!previousBoards) {
 			return logger.error("previous boards not found, get npm run migrate");
 		}
@@ -52,7 +52,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		};
 
 		if (getAllCardsLength() === getPreviousCardsLength()) {
-			storage.writeCardsCount(fileData);
+			storage.writeBoardsData(fileData);
 
 			return logger.info("sum all cards length and previous cards length equal");
 		}
@@ -60,7 +60,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		for (let i = 0; i < boards.length; i++) {
 			if (boards[i].included.cards.length > previousBoards[i].count!) {
 				try {
-					const template = getTemplate(boards[i]);
+					const template = getNewTaskTemplate(boards[i]);
 
 					await bot.api.sendMessage(CHATID, `${template}`);
 
@@ -71,6 +71,6 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 			}
 		}
 
-		storage.writeCardsCount(fileData);
+		storage.writeBoardsData(fileData);
 	}, INTERAVAL);
 };

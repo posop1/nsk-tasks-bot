@@ -6,23 +6,21 @@ const dir = `${__dirname}/../../db/data.json`;
 
 //TODO: rename all
 
-const writeCardsCount = (obj: IDataFile[]) => {
+const writeBoardsData = (obj: IDataFile[]) => {
 	try {
-		const rawdata = JSON.stringify(obj);
+		const rawData = JSON.stringify(obj);
 
-		fs.writeFileSync(dir, rawdata);
-
-		logger.info("write file successfully");
+		fs.writeFileSync(dir, rawData);
 	} catch (error) {
 		logger.error("write file successfully");
 	}
 };
 
-const readCardsCount = () => {
+const readBoardsData = () => {
 	try {
-		const rawdata = fs.readFileSync(dir, "utf8");
+		const rawData = fs.readFileSync(dir, "utf8");
 
-		const data: IDataFile[] = JSON.parse(rawdata);
+		const data: IDataFile[] = JSON.parse(rawData);
 
 		return data;
 	} catch (error) {
@@ -31,6 +29,6 @@ const readCardsCount = () => {
 };
 
 export const storage = {
-	writeCardsCount,
-	readCardsCount
+	writeBoardsData,
+	readBoardsData
 };

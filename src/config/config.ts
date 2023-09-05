@@ -35,7 +35,7 @@ export const getConfig = () => {
 		APP_URL,
 		ENV,
 		TOKEN,
-		ACCESSTOKEN: `Bearer ${ACCESSTOKEN}`,
+		ACCESSTOKEN: ACCESSTOKEN,
 		CHATID,
 		INTERVAL
 	};

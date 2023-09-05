@@ -1,7 +1,7 @@
 import { IBoard } from "../../types/board";
 import { logger } from "../logger/logger";
 
-export const getTemplate = (board: IBoard) => {
+export const getNewTaskTemplate = (board: IBoard) => {
 	try {
 		const cards = board.included.cards.sort((a, b) => {
 			const dateA = new Date(a.createdAt).valueOf();

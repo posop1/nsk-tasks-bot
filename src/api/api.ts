@@ -16,7 +16,7 @@ const getProjects = async () => {
 
 const getAllBoards = async () => {
 	try {
-		const projectsData = storage.readCardsCount();
+		const projectsData = storage.readBoardsData();
 
 		if (!projectsData) {
 			return logger.error("projects data not found");
@@ -30,67 +30,13 @@ const getAllBoards = async () => {
 			boards.push(data);
 		}
 
-		// const boards = projectsData.map(async (item) => {
-		// 	const { data } = await api.get<IBoard>(`/boards/${item.id}`);
-
-		// 	return data;
-		// });
-
-		// if (!boards) {
-		// 	return logger.error("fetch boards array");
-		// }
-
 		return boards;
 	} catch (error) {
 		return logger.error(error, "get all boards");
 	}
 };
 
-const getNetworkBoard = async () => {
-	try {
-		const { data } = await api.get<IBoard>("/boards/1054158202398049360");
-
-		return data;
-	} catch (error) {
-		return logger.error(error, "get network board");
-	}
-};
-
-const getServiceBoard = async () => {
-	try {
-		const { data } = await api.get<IBoard>("/boards/1054158451237717074");
-
-		return data;
-	} catch (error) {
-		return logger.error(error, "get service board");
-	}
-};
-
-const getQuestBoard = async () => {
-	try {
-		const { data } = await api.get<IBoard>("/boards/1054158675112887380");
-
-		return data;
-	} catch (error) {
-		return logger.error(error, "get quest board");
-	}
-};
-
-const getArchiveBoard = async () => {
-	try {
-		const { data } = await api.get<IBoard>("/boards/1054925397256308248");
-
-		return data;
-	} catch (error) {
-		return logger.error(error, "get archive board");
-	}
-};
-
 export const fetch = {
-	getNetworkBoard,
-	getArchiveBoard,
-	getServiceBoard,
-	getQuestBoard,
 	getProjects,
 	getAllBoards
 };
