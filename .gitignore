@@ -2,5 +2,3 @@
 /node_modules
 .env
 src/db
-
-#TODO: add /log 
