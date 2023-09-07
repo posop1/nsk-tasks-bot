@@ -3,7 +3,7 @@ import { config } from "../config/config";
 import { fetch } from "../api/api";
 import { logger } from "../libs/logger/logger";
 import { storage } from "../libs/storage/fileStorage";
-import { IDataFile } from "../types/prevNumbers";
+import { IDataFile } from "../types/dataFile";
 import { getNewTaskTemplate } from "../libs/template/template";
 
 export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<RawApi>>) => {
@@ -60,11 +60,24 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		for (let i = 0; i < boards.length; i++) {
 			if (boards[i].included.cards.length > previousBoards[i].count!) {
 				try {
-					const template = getNewTaskTemplate(boards[i]);
+					const cards = boards[i].included.cards.sort((a, b) => {
+						const dateA = new Date(a.createdAt).valueOf();
+						const dateB = new Date(b.createdAt).valueOf();
 
-					await bot.api.sendMessage(CHATID, `${template}`);
+						return dateA - dateB;
+					});
 
-					logger.info(`${boards[i].item.name}: send message`);
+					const newTaskCount = boards[i].included.cards.length - previousBoards[i].count!;
+
+					const newTasks = cards.splice(cards.length - newTaskCount, newTaskCount);
+
+					for (let j = 0; j < newTasks.length; j++) {
+						const template = getNewTaskTemplate(newTasks[j], boards[i].item.name);
+
+						await bot.api.sendMessage(CHATID, `${template}`);
+
+						logger.info(`${boards[i].item.name}: send message`);
+					}
 				} catch (error) {
 					logger.error(error, `${boards[i].item.name}: send message`);
 				}

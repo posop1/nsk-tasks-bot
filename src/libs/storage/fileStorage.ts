@@ -1,10 +1,8 @@
 import fs from "fs";
 import { logger } from "../logger/logger";
-import { IDataFile } from "../../types/prevNumbers";
+import { IDataFile } from "../../types/dataFile";
 
 const dir = `${__dirname}/../../db/data.json`;
-
-//TODO: rename all
 
 const writeBoardsData = (obj: IDataFile[]) => {
 	try {
