@@ -54,7 +54,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		if (getAllCardsLength() === getPreviousCardsLength()) {
 			storage.writeBoardsData(fileData);
 
-			return logger.info("sum all cards length and previous cards length equal");
+			return;
 		}
 
 		for (let i = 0; i < boards.length; i++) {
