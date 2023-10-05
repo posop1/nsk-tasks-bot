@@ -12,3 +12,4 @@ FROM node as prod
 
 RUN npm run build
 RUN npm run migrate
+
