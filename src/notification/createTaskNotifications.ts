@@ -13,7 +13,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		const boards = await fetch.getAllBoards();
 
 		if (!boards) {
-			return logger.error("boards not found");
+			return logger.error("Create Notification - boards not found");
 		}
 
 		const fileData = boards.map((item) => {
@@ -27,7 +27,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 
 		const previousBoards = storage.readBoardsData();
 		if (!previousBoards) {
-			return logger.error("previous boards not found, get npm run migrate");
+			return logger.error("Create Notification - previous boards not found, get npm run migrate");
 		}
 
 		const getAllCardsLength = (): number => {
@@ -72,17 +72,23 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 					const newTasks = cards.splice(cards.length - newTaskCount, newTaskCount);
 
 					for (let j = 0; j < newTasks.length; j++) {
+						if (newTasks[j].description === "" || !newTasks[j].description) {
+							logger.info("Create Notification - No description");
+							return;
+						}
 						const template = getNewTaskTemplate(newTasks[j], boards[i].item.name);
 
 						await bot.api.sendMessage(CHATID, `${template}`);
 
-						logger.info(`${boards[i].item.name}: send message`);
+						logger.info(`Create Notification - ${boards[i].item.name}: send message`);
 					}
 				} catch (error) {
-					logger.error(error, `${boards[i].item.name}: send message`);
+					logger.error(error, `Create Notification - ${boards[i].item.name}: send message`);
 				}
 			}
 		}
+
+		logger.info("writeFile");
 
 		storage.writeBoardsData(fileData);
 	}, INTERAVAL);
