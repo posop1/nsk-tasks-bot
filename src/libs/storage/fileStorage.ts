@@ -10,7 +10,7 @@ const writeBoardsData = (obj: IDataFile[]) => {
 
 		fs.writeFileSync(dir, rawData);
 	} catch (error) {
-		logger.error("write file successfully");
+		logger.error("Storage - write file successfully");
 	}
 };
 
@@ -22,7 +22,7 @@ const readBoardsData = () => {
 
 		return data;
 	} catch (error) {
-		logger.error(error, "read prev number");
+		logger.error(error, "Storage - read prev number");
 	}
 };
 

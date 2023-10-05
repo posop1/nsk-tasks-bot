@@ -10,7 +10,7 @@ const getProjects = async () => {
 
 		return data;
 	} catch (error) {
-		return logger.error(error, "get projects error");
+		return logger.error(error, "API - get projects error");
 	}
 };
 
@@ -19,7 +19,7 @@ const getAllBoards = async () => {
 		const projectsData = storage.readBoardsData();
 
 		if (!projectsData) {
-			return logger.error("projects data not found");
+			return logger.error("API - projects data not found");
 		}
 
 		const boards: IBoard[] = [];
@@ -32,7 +32,7 @@ const getAllBoards = async () => {
 
 		return boards;
 	} catch (error) {
-		return logger.error(error, "get all boards");
+		return logger.error(error, "API - get all boards");
 	}
 };
 
