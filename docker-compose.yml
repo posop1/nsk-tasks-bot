@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  nsk-tasks:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    volumes:
+      - ./src:/node/app/src
+    container_name: nsk-tasks
+    env_file:
+      - .env
+    command: npm run start
