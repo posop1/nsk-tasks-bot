@@ -13,3 +13,6 @@ FROM node as prod
 RUN npm run build
 RUN npm run migrate
 
+FROM node as dev 
+
+RUN npm run migrate:dev

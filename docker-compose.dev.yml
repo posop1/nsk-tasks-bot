@@ -1,14 +1,14 @@
 version: '3.7'
 
 services:
-  nsk-tasks-bot:
+  nsk-tasks-bot-dev:
     build: 
       context: .
       dockerfile: Dockerfile
-      target: prod
+      target: dev
     volumes:
       - ./src:/node/app/src
-    container_name: nsk-tasks-bot
+    container_name: nsk-tasks-bot-dev
     env_file:
-      - .env
-    command: node ./dist/index.js
+      - .env.dev
+    command: npm run dev
