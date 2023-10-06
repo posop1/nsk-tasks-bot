@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  nsk-tasks-bot-dev:
+  bot-dev:
     build: 
       context: .
       dockerfile: Dockerfile

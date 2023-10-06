@@ -1,7 +1,7 @@
 import fs from "fs";
 import { logger } from "../logger/logger";
-import { fetch } from "../../api/api";
-import { IDataFile } from "../../types/dataFile";
+import { fetch } from "../../app/api/api";
+import { IDataFile } from "../../app/types/dataFile";
 import { storage } from "../storage/fileStorage";
 
 const setCount = () => {

@@ -1,6 +1,6 @@
 import fs from "fs";
 import { logger } from "../logger/logger";
-import { IDataFile } from "../../types/dataFile";
+import { IDataFile } from "../../app/types/dataFile";
 
 const dir = `${__dirname}/../../db/data.json`;
 

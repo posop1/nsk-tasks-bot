@@ -1,4 +1,4 @@
-import { IBoardCard } from "../../types/board";
+import { IBoardCard } from "../../app/types/board";
 import { logger } from "../logger/logger";
 
 export const getNewTaskTemplate = (task: IBoardCard, boardName: string) => {

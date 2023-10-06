@@ -1,5 +1,5 @@
-import { logger } from "../libs/logger/logger";
-import { storage } from "../libs/storage/fileStorage";
+import { logger } from "../../libs/logger/logger";
+import { storage } from "../../libs/storage/fileStorage";
 import { IBoard } from "../types/board";
 import { IProjects } from "../types/projects";
 import api from "./instance";

@@ -1,6 +1,6 @@
 import { Bot } from "grammy";
 import { config } from "./config/config";
-import { logger } from "./libs/logger/logger";
+import { logger } from "../libs/logger/logger";
 import notification from "./notification";
 
 const startBot = () => {

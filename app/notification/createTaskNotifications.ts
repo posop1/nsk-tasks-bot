@@ -1,10 +1,10 @@
 import { Bot, Context, Api, RawApi } from "grammy";
 import { config } from "../config/config";
 import { fetch } from "../api/api";
-import { logger } from "../libs/logger/logger";
-import { storage } from "../libs/storage/fileStorage";
+import { logger } from "../../libs/logger/logger";
+import { storage } from "../../libs/storage/fileStorage";
 import { IDataFile } from "../types/dataFile";
-import { getNewTaskTemplate } from "../libs/template/template";
+import { getNewTaskTemplate } from "../../libs/template/template";
 
 export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<RawApi>>) => {
 	const INTERAVAL = +config.INTERVAL;
