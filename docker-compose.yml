@@ -6,9 +6,12 @@ services:
       context: .
       dockerfile: Dockerfile
       target: prod
+    restart: always
     volumes:
       - ./src:/node/app/src
     container_name: nsk-tasks-bot
     env_file:
       - .env
     command: node ./dist/index.js
+    ports:
+      - "80:80"
