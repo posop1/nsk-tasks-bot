@@ -53,6 +53,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 
 		if (getAllCardsLength() === getPreviousCardsLength()) {
 			storage.writeBoardsData(fileData);
+			logger.info("writeFile");
 
 			return;
 		}
@@ -76,7 +77,14 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 							logger.info("Create Notification - No description");
 							return;
 						}
-						const template = getNewTaskTemplate(newTasks[j], boards[i].item.name);
+
+						const taskList = boards[i].included.lists.map((item) => {
+							if (newTasks[j].listId === item.id) {
+								return item.name;
+							}
+						});
+
+						const template = getNewTaskTemplate(newTasks[j], boards[i].item.name, taskList);
 
 						await bot.api.sendMessage(CHATID, `${template}`);
 
