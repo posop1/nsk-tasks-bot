@@ -1,6 +1,7 @@
 import { logger } from "../../libs/logger/logger";
 import { storage } from "../../libs/storage/fileStorage";
 import { IBoard } from "../types/board";
+import { ICard } from "../types/card";
 import { IProjects } from "../types/projects";
 import api from "./instance";
 
@@ -36,7 +37,18 @@ const getAllBoards = async () => {
 	}
 };
 
+const getCard = async (id: string) => {
+	try {
+		const { data } = await api.get<ICard>(`/cards/${id}`);
+
+		return data;
+	} catch (error) {
+		return logger.error(error, "API - get card");
+	}
+};
+
 export const fetch = {
 	getProjects,
-	getAllBoards
+	getAllBoards,
+	getCard
 };

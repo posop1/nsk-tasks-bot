@@ -5,6 +5,7 @@ import { logger } from "../../libs/logger/logger";
 import { storage } from "../../libs/storage/fileStorage";
 import { IDataFile } from "../types/dataFile";
 import { getNewTaskTemplate } from "../../libs/template/template";
+import { IBoardUser } from "../types/board";
 
 export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<RawApi>>) => {
 	const INTERAVAL = +config.INTERVAL;
@@ -78,13 +79,43 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 							return;
 						}
 
+						const task = await fetch.getCard(newTasks[j].id);
+
+						if (!task) {
+							return logger.error("Create Notification - get card");
+						}
+
 						const taskList = boards[i].included.lists.map((item) => {
-							if (newTasks[j].listId === item.id) {
+							if (task.item.listId === item.id) {
 								return item.name;
 							}
 						});
 
-						const template = getNewTaskTemplate(newTasks[j], boards[i].item.name, taskList);
+						const taskUsers = () => {
+							const users: IBoardUser[] = [];
+							boards[i].included.users.map((item) => {
+								task.included.cardMemberships.map((user) => {
+									if (user.userId === item.id) {
+										users.push(item);
+									}
+								});
+							});
+							return users;
+						};
+
+						// const taskUsers: IBoardUser[] = [];
+
+						// for (let u = 0; u < boards[i].included.users.length; u++) {
+						// 	task.included.cardMemberships.map((user) => {
+						// 		if (user.userId === boards[i].included.users[u].id) {
+						// 			console.log(boards[i].included.users[u]);
+
+						// 			taskUsers.push(boards[i].included.users[u]);
+						// 		}
+						// 	});
+						// }
+
+						const template = getNewTaskTemplate(task.item, boards[i].item.name, taskList, taskUsers());
 
 						await bot.api.sendMessage(CHATID, `${template}`);
 
