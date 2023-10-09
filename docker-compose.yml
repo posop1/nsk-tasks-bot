@@ -12,6 +12,6 @@ services:
     container_name: nsk-tasks-bot
     env_file:
       - .env
-    command: node ./dist/index.js
+    command: npm run start
     ports:
       - "80:80"
