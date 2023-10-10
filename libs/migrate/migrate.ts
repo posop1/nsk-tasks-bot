@@ -26,7 +26,7 @@ const setCount = () => {
 	}, 1000);
 };
 
-const migrateDbFile = async () => {
+export const migrateDbFile = async () => {
 	const dir = `${__dirname}/../../db`;
 	const projects = await fetch.getProjects();
 
@@ -57,5 +57,3 @@ const migrateDbFile = async () => {
 
 	setCount();
 };
-
-migrateDbFile();
