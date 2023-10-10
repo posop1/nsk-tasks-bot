@@ -9,6 +9,7 @@ import { IBoardUser } from "../types/board";
 
 export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<RawApi>>) => {
 	const INTERAVAL = +config.INTERVAL;
+	logger.info("Create Notification started");
 
 	setInterval(async () => {
 		const boards = await fetch.getAllBoards();
@@ -54,7 +55,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 
 		if (getAllCardsLength() === getPreviousCardsLength()) {
 			storage.writeBoardsData(fileData);
-			logger.info("writeFile");
+			logger.info("Create Notification - writeFile");
 
 			return;
 		}
@@ -103,18 +104,6 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 							return users;
 						};
 
-						// const taskUsers: IBoardUser[] = [];
-
-						// for (let u = 0; u < boards[i].included.users.length; u++) {
-						// 	task.included.cardMemberships.map((user) => {
-						// 		if (user.userId === boards[i].included.users[u].id) {
-						// 			console.log(boards[i].included.users[u]);
-
-						// 			taskUsers.push(boards[i].included.users[u]);
-						// 		}
-						// 	});
-						// }
-
 						const template = getNewTaskTemplate(task.item, boards[i].item.name, taskList, taskUsers());
 
 						await bot.api.sendMessage(CHATID, `${template}`);
@@ -127,7 +116,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 			}
 		}
 
-		logger.info("writeFile");
+		logger.info("Create Notification - writeFile");
 
 		storage.writeBoardsData(fileData);
 	}, INTERAVAL);
