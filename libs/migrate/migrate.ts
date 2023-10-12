@@ -1,12 +1,12 @@
 import fs from "fs";
 import { logger } from "../logger/logger";
-import { fetch } from "../../app/api/api";
+import { get } from "../../app/api/get";
 import { IDataFile } from "../../app/types/dataFile";
 import { storage } from "../storage/fileStorage";
 
 const setCount = () => {
 	setTimeout(async () => {
-		const boards = await fetch.getAllBoards();
+		const boards = await get.allBoards();
 
 		if (!boards) {
 			return logger.error("Migrate - boards not found");
@@ -28,7 +28,7 @@ const setCount = () => {
 
 export const migrateDbFile = async () => {
 	const dir = `${__dirname}/../../db`;
-	const projects = await fetch.getProjects();
+	const projects = await get.projects();
 
 	if (!projects) {
 		return logger.error("Migrate - projects not found");

@@ -1,6 +1,6 @@
 import { Bot, Context, Api, RawApi } from "grammy";
 import { config } from "../config/config";
-import { fetch } from "../api/api";
+import { get } from "../api/get";
 import { logger } from "../../libs/logger/logger";
 import { storage } from "../../libs/storage/fileStorage";
 import { IDataFile } from "../types/dataFile";
@@ -12,7 +12,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 	logger.info("Create Notification started");
 
 	setInterval(async () => {
-		const boards = await fetch.getAllBoards();
+		const boards = await get.allBoards();
 
 		if (!boards) {
 			return logger.error("Create Notification - boards not found");
@@ -70,32 +70,32 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 						return dateA - dateB;
 					});
 
-					const newTaskCount = boards[i].included.cards.length - previousBoards[i].count!;
+					const newCardsCount = boards[i].included.cards.length - previousBoards[i].count!;
 
-					const newTasks = cards.splice(cards.length - newTaskCount, newTaskCount);
+					const newCards = cards.splice(cards.length - newCardsCount, newCardsCount);
 
-					for (let j = 0; j < newTasks.length; j++) {
-						if (newTasks[j].description === "" || !newTasks[j].description) {
+					for (let j = 0; j < newCards.length; j++) {
+						if (newCards[j].description === "" || !newCards[j].description) {
 							logger.info("Create Notification - No description");
 							return;
 						}
 
-						const task = await fetch.getCard(newTasks[j].id);
+						const card = await get.card(newCards[j].id);
 
-						if (!task) {
+						if (!card) {
 							return logger.error("Create Notification - get card");
 						}
 
-						const taskList = boards[i].included.lists.map((item) => {
-							if (task.item.listId === item.id) {
+						const cardsList = boards[i].included.lists.map((item) => {
+							if (card.item.listId === item.id) {
 								return item.name;
 							}
 						});
 
-						const taskUsers = () => {
+						const cardUsers = () => {
 							const users: IBoardUser[] = [];
 							boards[i].included.users.map((item) => {
-								task.included.cardMemberships.map((user) => {
+								card.included.cardMemberships.map((user) => {
 									if (user.userId === item.id) {
 										users.push(item);
 									}
@@ -104,7 +104,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 							return users;
 						};
 
-						const template = getNewTaskTemplate(task.item, boards[i].item.name, taskList, taskUsers());
+						const template = getNewTaskTemplate(card.item, boards[i].item.name, cardsList, cardUsers());
 
 						await bot.api.sendMessage(CHATID, `${template}`);
 

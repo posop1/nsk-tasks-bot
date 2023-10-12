@@ -23,8 +23,18 @@ export interface ICardItem {
 export interface ICardIncluded {
 	cardMemberships: ICardCardMembership[];
 	cardLabels: ICardCardLabel[];
-	tasks: any[];
+	tasks: ICardTasks[];
 	attachments: any[];
+}
+
+export interface ICardTasks {
+	id: string;
+	createdAt: Date;
+	updatedAt: Date;
+	position: string;
+	name: string;
+	isCompleted: boolean;
+	cardId: string;
 }
 
 export interface ICardCardMembership {

@@ -5,7 +5,7 @@ import { ICard } from "../types/card";
 import { IProjects } from "../types/projects";
 import api from "./instance";
 
-const getProjects = async () => {
+const projects = async () => {
 	try {
 		const { data } = await api.get<IProjects>("/projects");
 
@@ -15,7 +15,7 @@ const getProjects = async () => {
 	}
 };
 
-const getAllBoards = async () => {
+const allBoards = async () => {
 	try {
 		const projectsData = storage.readBoardsData();
 
@@ -37,7 +37,7 @@ const getAllBoards = async () => {
 	}
 };
 
-const getCard = async (id: string) => {
+const card = async (id: string) => {
 	try {
 		const { data } = await api.get<ICard>(`/cards/${id}`);
 
@@ -47,8 +47,8 @@ const getCard = async (id: string) => {
 	}
 };
 
-export const fetch = {
-	getProjects,
-	getAllBoards,
-	getCard
+export const get = {
+	projects,
+	allBoards,
+	card
 };

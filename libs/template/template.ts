@@ -3,22 +3,22 @@ import { ICardItem } from "../../app/types/card";
 import { logger } from "../logger/logger";
 
 export const getNewTaskTemplate = (
-	task: ICardItem,
+	card: ICardItem,
 	boardName: string,
-	taskList: (string | undefined)[],
-	taskUsers: IBoardUser[]
+	cardsList: (string | undefined)[],
+	cardUsers: IBoardUser[]
 ) => {
 	try {
 		const template =
-			`Новая Задача: ${task.name}` +
+			`Новая Задача: ${card.name}` +
 			"\n" +
 			`Доска: ${boardName}` +
 			"\n" +
-			`Колонка:${taskList.toString().replace(/[\s.,%]/g, " ")}` +
+			`Колонка:${cardsList.toString().replace(/[\s.,%]/g, " ")}` +
 			"\n" +
-			`Участники: ${taskUsers.map((item) => item.name + " ")}` +
+			`Участники: ${cardUsers.map((item) => item.name + " ")}` +
 			"\n" +
-			`${task.description ? `Описание: ${task.description}` : ""}`;
+			`${card.description ? `Описание: ${card.description}` : ""}`;
 
 		return template;
 	} catch (error) {
