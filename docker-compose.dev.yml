@@ -11,6 +11,6 @@ services:
     container_name: nsk-tasks-bot-dev
     env_file:
       - .env.dev
-    command: npm run dev
+    command: npm run start
     ports:
       - "8080:80"
