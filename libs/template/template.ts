@@ -14,7 +14,7 @@ export const getNewTaskTemplate = (
 			"\n" +
 			`Доска: ${boardName}` +
 			"\n" +
-			`Колонка:${cardsList.toString().replace(/[\s.,%]/g, " ")}` +
+			`Колонка: ${cardsList.toString().replace(/[\s.,%]/g, " ")}` +
 			"\n" +
 			`Участники: ${cardUsers.map((item) => item.name + " ")}` +
 			"\n" +

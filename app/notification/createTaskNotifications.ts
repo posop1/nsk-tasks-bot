@@ -55,7 +55,6 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 
 		if (getAllCardsLength() === getPreviousCardsLength()) {
 			storage.writeBoardsData(fileData);
-			logger.info("Create Notification - writeFile");
 
 			return;
 		}
@@ -115,8 +114,6 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 				}
 			}
 		}
-
-		logger.info("Create Notification - writeFile");
 
 		storage.writeBoardsData(fileData);
 	}, INTERAVAL);
