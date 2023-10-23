@@ -5,7 +5,7 @@ export const getConfig = () => {
 	dotenv.config();
 
 	const APP_URL = process.env.APP_URL;
-	const ENV = process.env.ENV || "prod";
+	const NODE_ENV = process.env.NODE_ENV || "prod";
 	const TOKEN = process.env.TOKEN;
 	const ACCESSTOKEN = process.env.ACCESSTOKEN;
 	const CHATID = process.env.CHATID;
@@ -33,9 +33,9 @@ export const getConfig = () => {
 
 	const config: IConfig = {
 		APP_URL,
-		ENV,
+		NODE_ENV,
 		TOKEN,
-		ACCESSTOKEN: ACCESSTOKEN,
+		ACCESSTOKEN,
 		CHATID,
 		INTERVAL
 	};
