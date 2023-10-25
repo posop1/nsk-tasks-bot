@@ -6,13 +6,13 @@ import { migrateDbFile } from "../libs/migrate/migrate";
 
 const startBot = () => {
 	try {
-		const { TOKEN, ENV, CHATID } = config;
+		const { TOKEN, NODE_ENV, CHATID } = config;
 
 		const bot = new Bot(TOKEN);
 
 		bot.start();
 
-		logger.info(`Bot started on ${ENV} mode`);
+		logger.info(`Bot started on ${NODE_ENV} mode`);
 
 		migrateDbFile();
 
