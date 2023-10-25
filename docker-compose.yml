@@ -7,10 +7,12 @@ services:
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - .:/node/app/
+      - bot:/node/app/
     container_name: nsk-tasks-bot
     env_file:
       - .env
     command: npm run start
     ports:
       - "8080"
+volumes:
+  bot:
