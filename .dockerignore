@@ -1,4 +1,14 @@
 **/node_modules/
 **/dist
+
+README.md
+
 .gitignore
 .git
+.cache
+
+.prettierignore
+.prettierrc.json
+.eslintrc.json
+
+.env.example
