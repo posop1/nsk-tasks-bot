@@ -3,7 +3,7 @@ import { config } from "../config/config";
 import { get } from "../api/get";
 import { logger } from "../../libs/logger/logger";
 import { storage } from "../../libs/storage/fileStorage";
-import { IDataFile } from "../types/dataFile";
+import { IBoardDataFile } from "../types/dataFile";
 import { getNewTaskTemplate } from "../../libs/template/template";
 import { IBoardUser } from "../types/board";
 
@@ -19,9 +19,9 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		}
 
 		const fileData = boards.map((item) => {
-			const boardsData: IDataFile = {
+			const boardsData: IBoardDataFile = {
 				...item.item,
-				count: item.included.cards.length
+				cardsCount: item.included.cards.length
 			};
 
 			return boardsData;
@@ -45,8 +45,8 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 			let sum = 0;
 
 			previousBoards.map((item) => {
-				if (item.count) {
-					sum += item.count;
+				if (item.cardsCount) {
+					sum += item.cardsCount;
 				}
 			});
 
@@ -60,7 +60,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		}
 
 		for (let i = 0; i < boards.length; i++) {
-			if (boards[i].included.cards.length > previousBoards[i].count!) {
+			if (boards[i].included.cards.length > previousBoards[i].cardsCount!) {
 				try {
 					const cards = boards[i].included.cards.sort((a, b) => {
 						const dateA = new Date(a.createdAt).valueOf();
@@ -69,7 +69,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 						return dateA - dateB;
 					});
 
-					const newCardsCount = boards[i].included.cards.length - previousBoards[i].count!;
+					const newCardsCount = boards[i].included.cards.length - previousBoards[i].cardsCount!;
 
 					const newCards = cards.splice(cards.length - newCardsCount, newCardsCount);
 

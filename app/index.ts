@@ -2,7 +2,7 @@ import { Bot } from "grammy";
 import { config } from "./config/config";
 import { logger } from "../libs/logger/logger";
 import notification from "./notification";
-import { migrateDbFile } from "../libs/migrate/migrate";
+import { migrateBoardsFile } from "../libs/migrate/migrate";
 
 const startBot = () => {
 	try {
@@ -14,7 +14,7 @@ const startBot = () => {
 
 		logger.info(`Bot started on ${NODE_ENV} mode`);
 
-		migrateDbFile();
+		migrateBoardsFile();
 
 		notification.createTaskNotifications(CHATID, bot);
 	} catch (error) {

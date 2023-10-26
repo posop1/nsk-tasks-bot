@@ -56,7 +56,7 @@ export interface IProjectsBoard {
 	position: number;
 	name: string;
 	projectId: string;
-	count?: number;
+	cardsCount?: number;
 }
 
 export interface IProjectsBoardMembership {
