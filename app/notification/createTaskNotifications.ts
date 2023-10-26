@@ -29,7 +29,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 
 		const previousBoards = storage.readBoardsData();
 		if (!previousBoards) {
-			return logger.error("Create Notification - previous boards not found, get npm run migrate");
+			return logger.error("Create Notification - previous boards not found");
 		}
 
 		const getAllCardsLength = (): number => {
@@ -75,7 +75,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 
 					for (let j = 0; j < newCards.length; j++) {
 						if (newCards[j].description === "" || !newCards[j].description) {
-							logger.info("Create Notification - No description");
+							logger.info(`Create Notification - Card: ${newCards[j].name}  no description`);
 							return;
 						}
 
