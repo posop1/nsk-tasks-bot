@@ -69,21 +69,14 @@ const migrateCardsFile = () => {
 			return logger.error("Migrate - boards not found");
 		}
 
-		// const dataBoards = () => {
-		// 	let cards: ICardDataFile[] = [];
-		// 	boards.map((board) => {
-		// 		cards = board.included.cards;
-		// 	});
-
-		// 	return cards;
-		// };
+		const cards = boards.map((item) => item.included.cards);
 
 		fs.access(dir + "/cards.json", (err) => {
 			if (err) {
-				fs.writeFileSync(dir + "/cards.json", JSON.stringify(boards));
+				fs.writeFileSync(dir + "/cards.json", JSON.stringify(cards));
 
 				logger.info("Migrate - cards.json file wrote");
 			}
 		});
-	}, 5000);
+	}, 2000);
 };
