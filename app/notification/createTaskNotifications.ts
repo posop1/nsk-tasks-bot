@@ -4,7 +4,7 @@ import { get } from "../api/get";
 import { logger } from "../../libs/logger/logger";
 import { storage } from "../../libs/storage/fileStorage";
 import { IBoardDataFile } from "../types/dataFile";
-import { getNewTaskTemplate } from "../../libs/template/template";
+import { template } from "../../libs/template/template";
 import { IBoardUser } from "../types/board";
 
 export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<RawApi>>) => {
@@ -103,14 +103,14 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 							return users;
 						};
 
-						const template = getNewTaskTemplate(card.item, boards[i].item.name, cardsList, cardUsers());
+						const message = template.newTask(card.item, boards[i].item.name, cardsList, cardUsers());
 
-						await bot.api.sendMessage(CHATID, `${template}`);
+						await bot.api.sendMessage(CHATID, `${message}`);
 
 						logger.info(`Create Notification - ${boards[i].item.name}: send message`);
 					}
 				} catch (error) {
-					logger.error(error, `Create Notification - ${boards[i].item.name}: send message`);
+					logger.error(error, `Create Notification - ${boards[i].item.name}: not send message`);
 				}
 			}
 		}

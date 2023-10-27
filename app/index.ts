@@ -17,6 +17,7 @@ const startBot = () => {
 		migrateBoardsFile();
 
 		notification.createTaskNotifications(CHATID, bot);
+		notification.updateTaskNotifications(CHATID, bot);
 	} catch (error) {
 		logger.error(error, "startBot");
 	}
