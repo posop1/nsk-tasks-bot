@@ -33,12 +33,6 @@ export const updateTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		for (let i = 0; i < cards.length; i++) {
 			for (let j = 0; j < previousCards.length; j++) {
 				if (cards[i].id === previousCards[j].id) {
-					// const card = await get.card(cards[i].id);
-
-					// if (!card) {
-					// 	return logger.error("Update Notification - get card");
-					// }
-
 					if (cards[i].listId !== previousCards[j].listId) {
 						let list = "";
 						boards.map((board) => {
