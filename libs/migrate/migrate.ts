@@ -1,7 +1,7 @@
 import fs from "fs";
 import { logger } from "../logger/logger";
 import { get } from "../../app/api/get";
-import { IBoardDataFile } from "../../app/types/dataFile";
+import { IBoardDataFile, ICardDataFile } from "../../app/types/dataFile";
 import { storage } from "../storage/fileStorage";
 
 const setCount = () => {
@@ -69,11 +69,21 @@ const migrateCardsFile = () => {
 			return logger.error("Migrate - boards not found");
 		}
 
-		const cards = boards.map((item) => item.included.cards);
+		const getCards = () => {
+			const cards: ICardDataFile[] = [];
+
+			boards.map((board) => {
+				board.included.cards.map((card) => {
+					cards.push(card);
+				});
+			});
+
+			return cards;
+		};
 
 		fs.access(dir + "/cards.json", (err) => {
 			if (err) {
-				fs.writeFileSync(dir + "/cards.json", JSON.stringify(cards));
+				fs.writeFileSync(dir + "/cards.json", JSON.stringify(getCards()));
 
 				logger.info("Migrate - cards.json file wrote");
 			}
