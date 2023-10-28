@@ -16,8 +16,7 @@ const newTask = (
 			"\n" +
 			`Колонка: ${cardList.toString().replace(/[\s.,%]/g, " ")}` +
 			"\n" +
-			`${cardUsers ? `Участники: ${cardUsers.map((item) => item.name + " ")}` : ""}` +
-			"\n" +
+			`${cardUsers.length ? `Участники: ${cardUsers.map((item) => item.name + " ")} \n` : ""}` +
 			`${card.description ? `Описание: ${card.description}` : ""}`;
 
 		return template;
