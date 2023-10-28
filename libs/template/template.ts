@@ -2,10 +2,10 @@ import { IBoardUser } from "../../app/types/board";
 import { ICardItem } from "../../app/types/card";
 import { logger } from "../logger/logger";
 
-export const getNewTaskTemplate = (
+const newTask = (
 	card: ICardItem,
 	boardName: string,
-	cardsList: (string | undefined)[],
+	cardList: (string | undefined)[],
 	cardUsers: IBoardUser[]
 ) => {
 	try {
@@ -14,14 +14,33 @@ export const getNewTaskTemplate = (
 			"\n" +
 			`Доска: ${boardName}` +
 			"\n" +
-			`Колонка: ${cardsList.toString().replace(/[\s.,%]/g, " ")}` +
+			`Колонка: ${cardList.toString().replace(/[\s.,%]/g, " ")}` +
 			"\n" +
-			`${cardUsers ? `Участники: ${cardUsers.map((item) => item.name + " ")}` : ""}` +
-			"\n" +
+			`${cardUsers.length ? `Участники: ${cardUsers.map((item) => item.name + " ")} \n` : ""}` +
 			`${card.description ? `Описание: ${card.description}` : ""}`;
 
 		return template;
 	} catch (error) {
-		logger.error(error, "get template");
+		logger.error(error, "Get template - new task error");
 	}
+};
+
+const taskUpdate = (cardName: string, cardList: string, previousCardList: string) => {
+	try {
+		const template =
+			`Задача: ${cardName}` +
+			"\n" +
+			`Перместилась: ${previousCardList.toString().replace(/[\s.,%]/g, " ")} ⤍ ${cardList
+				.toString()
+				.replace(/[\s.,%]/g, " ")}`;
+
+		return template;
+	} catch (error) {
+		logger.error(error, "Get template - task update");
+	}
+};
+
+export const template = {
+	newTask,
+	taskUpdate
 };

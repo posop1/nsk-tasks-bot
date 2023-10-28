@@ -1,7 +1,7 @@
 import fs from "fs";
 import { logger } from "../logger/logger";
 import { get } from "../../app/api/get";
-import { IDataFile } from "../../app/types/dataFile";
+import { IBoardDataFile, ICardDataFile } from "../../app/types/dataFile";
 import { storage } from "../storage/fileStorage";
 
 const setCount = () => {
@@ -13,9 +13,9 @@ const setCount = () => {
 		}
 
 		const fileData = boards.map((item) => {
-			const boardsData: IDataFile = {
+			const boardsData: IBoardDataFile = {
 				...item.item,
-				count: item.included.cards.length
+				cardsCount: item.included.cards.length
 			};
 
 			return boardsData;
@@ -26,7 +26,7 @@ const setCount = () => {
 	}, 1000);
 };
 
-export const migrateDbFile = async () => {
+export const migrateBoardsFile = async () => {
 	const dir = `${__dirname}/../../db`;
 	const projects = await get.projects();
 
@@ -34,26 +34,55 @@ export const migrateDbFile = async () => {
 		return logger.error("Migrate - projects not found");
 	}
 
-	const dataProjects: IDataFile[] = projects.included.boards.map((item) => {
+	const dataProjects: IBoardDataFile[] = projects.included.boards.map((item) => {
 		item = {
 			...item,
-			count: 1
+			cardsCount: 1
 		};
 
 		return item;
 	});
 
-	fs.access(dir + "/data.json", (err) => {
+	fs.access(dir + "/boards.json", (err) => {
 		if (err) {
 			if (!fs.existsSync(dir)) {
 				fs.mkdirSync(dir);
 			}
 
-			fs.writeFileSync(dir + "/data.json", JSON.stringify(dataProjects));
+			fs.writeFileSync(dir + "/boards.json", JSON.stringify(dataProjects));
 
-			logger.info("Migrate - data.json file wrote");
+			logger.info("Migrate - boards.json file wrote");
 		}
 	});
 
 	setCount();
+	migrateCardsFile();
+};
+
+const migrateCardsFile = () => {
+	const dir = `${__dirname}/../../db`;
+
+	setTimeout(async () => {
+		const boards = await get.allBoards();
+
+		if (!boards) {
+			return logger.error("Migrate - boards not found");
+		}
+
+		const cards: ICardDataFile[] = [];
+
+		boards.map((board) => {
+			board.included.cards.map((card) => {
+				cards.push(card);
+			});
+		});
+
+		fs.access(dir + "/cards.json", (err) => {
+			if (err) {
+				fs.writeFileSync(dir + "/cards.json", JSON.stringify(cards));
+
+				logger.info("Migrate - cards.json file wrote");
+			}
+		});
+	}, 2000);
 };

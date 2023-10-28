@@ -3,8 +3,8 @@ import { config } from "../config/config";
 import { get } from "../api/get";
 import { logger } from "../../libs/logger/logger";
 import { storage } from "../../libs/storage/fileStorage";
-import { IDataFile } from "../types/dataFile";
-import { getNewTaskTemplate } from "../../libs/template/template";
+import { IBoardDataFile } from "../types/dataFile";
+import { template } from "../../libs/template/template";
 import { IBoardUser } from "../types/board";
 
 export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<RawApi>>) => {
@@ -19,9 +19,9 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		}
 
 		const fileData = boards.map((item) => {
-			const boardsData: IDataFile = {
+			const boardsData: IBoardDataFile = {
 				...item.item,
-				count: item.included.cards.length
+				cardsCount: item.included.cards.length
 			};
 
 			return boardsData;
@@ -45,8 +45,8 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 			let sum = 0;
 
 			previousBoards.map((item) => {
-				if (item.count) {
-					sum += item.count;
+				if (item.cardsCount) {
+					sum += item.cardsCount;
 				}
 			});
 
@@ -60,7 +60,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		}
 
 		for (let i = 0; i < boards.length; i++) {
-			if (boards[i].included.cards.length > previousBoards[i].count!) {
+			if (boards[i].included.cards.length > previousBoards[i].cardsCount!) {
 				try {
 					const cards = boards[i].included.cards.sort((a, b) => {
 						const dateA = new Date(a.createdAt).valueOf();
@@ -69,7 +69,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 						return dateA - dateB;
 					});
 
-					const newCardsCount = boards[i].included.cards.length - previousBoards[i].count!;
+					const newCardsCount = boards[i].included.cards.length - previousBoards[i].cardsCount!;
 
 					const newCards = cards.splice(cards.length - newCardsCount, newCardsCount);
 
@@ -103,14 +103,14 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 							return users;
 						};
 
-						const template = getNewTaskTemplate(card.item, boards[i].item.name, cardsList, cardUsers());
+						const message = template.newTask(card.item, boards[i].item.name, cardsList, cardUsers());
 
-						await bot.api.sendMessage(CHATID, `${template}`);
+						await bot.api.sendMessage(CHATID, `${message}`);
 
 						logger.info(`Create Notification - ${boards[i].item.name}: send message`);
 					}
 				} catch (error) {
-					logger.error(error, `Create Notification - ${boards[i].item.name}: send message`);
+					logger.error(error, `Create Notification - ${boards[i].item.name}: not send message`);
 				}
 			}
 		}
