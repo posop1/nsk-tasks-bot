@@ -63,5 +63,5 @@ export const updateTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		}
 
 		storage.writeCardsData(cards);
-	}, INTERVAL);
+	}, INTERVAL / 2);
 };
