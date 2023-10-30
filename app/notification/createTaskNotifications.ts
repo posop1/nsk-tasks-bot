@@ -105,7 +105,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 
 						const message = template.newTask(card.item, boards[i].item.name, cardsList, cardUsers());
 
-						await bot.api.sendMessage(CHATID, `${message}`);
+						await bot.api.sendMessage(CHATID, `${message}`, { parse_mode: "HTML" });
 
 						logger.info(`Create Notification - ${boards[i].item.name}: send message`);
 					}

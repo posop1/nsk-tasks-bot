@@ -10,14 +10,17 @@ const newTask = (
 ) => {
 	try {
 		const template =
-			`Новая Задача: ${card.name}` +
+			`<b>Новая задача:</b> ${card.name}` +
 			"\n" +
-			`Доска: ${boardName}` +
+			`<b>Доска:</b> ${boardName}` +
 			"\n" +
-			`Колонка: ${cardList.toString().replace(/[\s.,%]/g, " ")}` +
+			`<b>Колонка:</b> ${cardList.toString().replace(/[\s.,%]/g, " ")}` +
 			"\n" +
-			`${cardUsers.length ? `Участники: ${cardUsers.map((item) => item.name + " ")} \n` : ""}` +
-			`${card.description ? `Описание: ${card.description}` : ""}`;
+			`${cardUsers.length ? `<b>Участники:</b> ${cardUsers.map((item) => item.name + " ")}` : ""}` +
+			"\n" +
+			`${card.description ? `<b>Описание:</b> ${card.description}` : ""}` +
+			"\n \n" +
+			`ID:<code> ${card.id}</code>`;
 
 		return template;
 	} catch (error) {
@@ -28,9 +31,9 @@ const newTask = (
 const taskUpdate = (cardName: string, cardList: string, previousCardList: string) => {
 	try {
 		const template =
-			`Задача: ${cardName}` +
+			`<b>Задача:</b> ${cardName}` +
 			"\n" +
-			`Перместилась: ${previousCardList.toString().replace(/[\s.,%]/g, " ")} ⤍ ${cardList
+			`<b>Перместилась:</b> ${previousCardList.toString().replace(/[\s.,%]/g, " ")} ⤍ ${cardList
 				.toString()
 				.replace(/[\s.,%]/g, " ")}`;
 
