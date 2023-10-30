@@ -2,7 +2,7 @@ import fs from "fs";
 import { logger } from "../logger/logger";
 import { get } from "../../app/api/get";
 import { IBoardDataFile, ICardDataFile } from "../../app/types/dataFile";
-import { storage } from "../storage/fileStorage";
+import { storage } from "../storage";
 
 const setCount = () => {
 	setTimeout(async () => {
@@ -21,7 +21,7 @@ const setCount = () => {
 			return boardsData;
 		});
 
-		storage.writeBoardsData(fileData);
+		storage.boards.write(fileData);
 		logger.info("Migrate - set count");
 	}, 1000);
 };
