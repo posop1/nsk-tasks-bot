@@ -1,5 +1,5 @@
 import { logger } from "../../libs/logger/logger";
-import { storage } from "../../libs/storage/fileStorage";
+import { storage } from "../../libs/storage";
 import { IBoard } from "../types/board";
 import { ICard } from "../types/card";
 import { IProjects } from "../types/projects";
@@ -17,7 +17,7 @@ const projects = async () => {
 
 const allBoards = async () => {
 	try {
-		const projectsData = storage.readBoardsData();
+		const projectsData = storage.boards.read();
 
 		if (!projectsData) {
 			return logger.error("API - projects data not found");

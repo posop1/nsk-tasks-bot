@@ -2,7 +2,7 @@ import { Bot, Context, Api, RawApi } from "grammy";
 import { config } from "../config/config";
 import { logger } from "../../libs/logger/logger";
 import { get } from "../api/get";
-import { storage } from "../../libs/storage/fileStorage";
+import { storage } from "../../libs/storage";
 import { IBoardCard } from "../types/board";
 import { template } from "../../libs/template/template";
 
@@ -25,7 +25,7 @@ export const updateTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 			});
 		});
 
-		const previousCards = storage.readCardsData();
+		const previousCards = storage.cards.read();
 		if (!previousCards) {
 			return logger.error("Update Notification - previous cards not found");
 		}
@@ -62,6 +62,6 @@ export const updateTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 			}
 		}
 
-		storage.writeCardsData(cards);
+		storage.cards.write(cards);
 	}, INTERVAL / 2);
 };

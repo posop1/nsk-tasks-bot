@@ -2,7 +2,7 @@ import { Bot, Context, Api, RawApi } from "grammy";
 import { config } from "../config/config";
 import { get } from "../api/get";
 import { logger } from "../../libs/logger/logger";
-import { storage } from "../../libs/storage/fileStorage";
+import { storage } from "../../libs/storage";
 import { IBoardDataFile } from "../types/dataFile";
 import { template } from "../../libs/template/template";
 import { IBoardUser } from "../types/board";
@@ -27,7 +27,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 			return boardsData;
 		});
 
-		const previousBoards = storage.readBoardsData();
+		const previousBoards = storage.boards.read();
 		if (!previousBoards) {
 			return logger.error("Create Notification - previous boards not found");
 		}
@@ -54,7 +54,7 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 		};
 
 		if (getAllCardsLength() === getPreviousCardsLength()) {
-			storage.writeBoardsData(fileData);
+			storage.boards.write(fileData);
 
 			return;
 		}
@@ -115,6 +115,6 @@ export const createTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 			}
 		}
 
-		storage.writeBoardsData(fileData);
+		storage.boards.write(fileData);
 	}, INTERAVAL);
 };
