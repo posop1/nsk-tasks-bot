@@ -9,6 +9,27 @@ const newTask = (
 	cardUsers: IBoardUser[]
 ) => {
 	try {
+		// const users = [
+		// 	{
+		// 		name: "Яхин А.З",
+		// 		link: "@iamnotadeveloper"
+		// 	},
+		// 	{
+		// 		name: "Бахматов С.В",
+		// 		link: "@Getoutaway"
+		// 	}
+		// ];
+
+		// const templateUser = cardUsers.map((user) => {
+		// 	users.map((item) => {
+		// 		if (user.name === item.name) {
+		// 			return item.link;
+		// 		}
+		// 	});
+
+		// 	return user.name;
+		// });
+
 		const template =
 			`<b>Новая задача:</b> ${card.name}` +
 			"\n" +
