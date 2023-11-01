@@ -54,7 +54,7 @@ export const updateTaskNotifications = (CHATID: string, bot: Bot<Context, Api<Ra
 
 						const message = template.taskUpdate(cards[i].name, list, previousList);
 
-						await bot.api.sendMessage(CHATID, `${message}`);
+						await bot.api.sendMessage(CHATID, `${message}`, { parse_mode: "HTML" });
 
 						logger.info(`Update Notification - ${cards[i].name}: send message`);
 					}
