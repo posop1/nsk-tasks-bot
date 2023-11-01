@@ -50,6 +50,7 @@ const newTask = (
 						break;
 					} else if (cardUsers[i].name !== users[j].name && usersTemplate[i] !== cardUsers[i].name) {
 						usersTemplate.push(cardUsers[i].name);
+						break;
 					}
 				}
 			}
