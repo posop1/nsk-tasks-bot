@@ -9,58 +9,58 @@ const newTask = (
 	cardUsers: IBoardUser[]
 ) => {
 	try {
-		const users = [
-			{
-				name: "Яхин А.З.",
-				link: "@iamnotadeveloper"
-			},
-			{
-				name: "Бахматов С.В.",
-				link: "@Getoutaway"
-			},
-			{
-				name: "Аминова Н.Я.",
-				link: "@NailyaBahtieva"
-			},
-			{
-				name: "Холодилов А.С.",
-				link: "@Freez_Izzy"
-			},
-			{
-				name: "Хайдаров Р.Р.",
-				link: "@caxapo4uk777"
-			},
-			{
-				name: "Глазов А.В.",
-				link: "@victopy"
-			},
-			{
-				name: "Танкеева Е.А.",
-				link: "@katenochek_nv"
-			}
-		];
+		// const users = [
+		// 	{
+		// 		name: "Яхин А.З.",
+		// 		link: "@iamnotadeveloper"
+		// 	},
+		// 	{
+		// 		name: "Бахматов С.В.",
+		// 		link: "@Getoutaway"
+		// 	},
+		// 	{
+		// 		name: "Аминова Н.Я.",
+		// 		link: "@NailyaBahtieva"
+		// 	},
+		// 	{
+		// 		name: "Холодилов А.С.",
+		// 		link: "@Freez_Izzy"
+		// 	},
+		// 	{
+		// 		name: "Хайдаров Р.Р.",
+		// 		link: "@caxapo4uk777"
+		// 	},
+		// 	{
+		// 		name: "Глазов А.В.",
+		// 		link: "@victopy"
+		// 	},
+		// 	{
+		// 		name: "Танкеева Е.А.",
+		// 		link: "@katenochek_nv"
+		// 	}
+		// ];
 
-		const setUserTemplate = () => {
-			const usersTemplate: string[] = [];
+		// const setUserTemplate = () => {
+		// 	const usersTemplate: string[] = [];
 
-			for (let i = 0; i < cardUsers.length; i++) {
-				for (let j = 0; j < users.length; j++) {
-					if (cardUsers[i].name === users[j].name) {
-						usersTemplate.push(users[j].link);
-						break;
-					} else if (cardUsers[i].name !== users[j].name && usersTemplate[i] !== cardUsers[i].name) {
-						usersTemplate.push(cardUsers[i].name);
-						break;
-					}
-				}
-			}
+		// 	for (let i = 0; i < cardUsers.length; i++) {
+		// 		for (let j = 0; j < users.length; j++) {
+		// 			if (cardUsers[i].name === users[j].name) {
+		// 				usersTemplate.push(users[j].link);
+		// 				break;
+		// 			} else if (cardUsers[i].name !== users[j].name && usersTemplate[i] !== cardUsers[i].name) {
+		// 				usersTemplate.push(cardUsers[i].name);
+		// 				break;
+		// 			}
+		// 		}
+		// 	}
 
-			if (!usersTemplate.length) {
-				return "";
-			}
+		// 	if (!usersTemplate.length) {
+		// 		return "";
+		// 	}
 
-			return usersTemplate.join(", ");
-		};
+		// 	return usersTemplate.join(", ");
+		// };
 
 		const template =
 			`<b>Новая задача:</b> ${card.name}` +
@@ -69,7 +69,7 @@ const newTask = (
 			"\n" +
 			`<b>Колонка:</b> ${cardList.toString().replace(/[\s.,%]/g, " ")}` +
 			"\n" +
-			`<b>Участники:</b> ${setUserTemplate()}` +
+			`<b>Участники:</b> ${cardUsers.map((user) => `${user.name}, `)}` +
 			"\n" +
 			`${card.description ? `<b>Описание:</b> ${card.description}` : ""}` +
 			"\n \n" +
